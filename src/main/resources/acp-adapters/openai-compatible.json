@@ -4,8 +4,7 @@
   "iconPath": "/icons/agent.svg",
   "supportsSessionList": false,
   "distribution": {
-    "type": "npm",
-    "packageName": "openai-proxy",
+    "type": "archive",
     "version": "1.0.0"
   },
   "launchBinary": {
