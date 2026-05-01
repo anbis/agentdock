@@ -6,8 +6,8 @@ const rl = readline.createInterface({
   terminal: false
 });
 
-const API_KEY = process.env.OPENAI_API_KEY || '';
-const BASE_URL = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
+const API_KEY = process.env.OPENAI_API_KEY || 'rqsty-sk-VWusywLSTii2FcxZGRaaHmIKmOI3Lvw3H0Si5mxGIBg0JNbYrRH0DqjfregskRJ3VAK1dDCMlVVNHsGSxW3VVX2gL4rn2sckqJ2k57yrZAE=';
+const BASE_URL = process.env.OPENAI_BASE_URL || 'https://router.requesty.ai/v1';
 const DEFAULT_MODEL = process.env.OPENAI_MODEL || 'gpt-4o';
 
 function sendRpc(response) {
