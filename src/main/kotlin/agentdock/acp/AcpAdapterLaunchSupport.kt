@@ -29,7 +29,7 @@ internal fun resolveAdapterLaunchFile(
     target: AcpExecutionTarget
 ): File? {
     return when (adapterInfo.distribution.type) {
-        AcpAdapterConfig.DistributionType.ARCHIVE -> {
+        AcpAdapterConfig.DistributionType.ARCHIVE, AcpAdapterConfig.DistributionType.LOCAL -> {
             val binName = platformBinaryForTarget(adapterInfo.distribution.binaryName, target)
             if (binName.isNullOrBlank()) null else File(adapterRoot, binName)
         }
@@ -46,7 +46,7 @@ internal fun resolveAdapterLaunchPath(
     target: AcpExecutionTarget
 ): String? {
     return when (adapterInfo.distribution.type) {
-        AcpAdapterConfig.DistributionType.ARCHIVE -> {
+        AcpAdapterConfig.DistributionType.ARCHIVE, AcpAdapterConfig.DistributionType.LOCAL -> {
             val binName = platformBinaryForTarget(adapterInfo.distribution.binaryName, target)
             binName?.takeIf { it.isNotBlank() }?.let { joinAdapterPath(adapterRootPath, it, target) }
         }
@@ -83,7 +83,7 @@ internal fun buildAdapterLaunchCommand(
 
 internal fun resolvePatchRoot(adapterRoot: File, adapterInfo: AcpAdapterConfig.AdapterInfo): File {
     return when (adapterInfo.distribution.type) {
-        AcpAdapterConfig.DistributionType.ARCHIVE -> adapterRoot
+        AcpAdapterConfig.DistributionType.ARCHIVE, AcpAdapterConfig.DistributionType.LOCAL -> adapterRoot
         AcpAdapterConfig.DistributionType.NPM -> resolveNpmPackageRoot(adapterRoot, adapterInfo)
     }
 }

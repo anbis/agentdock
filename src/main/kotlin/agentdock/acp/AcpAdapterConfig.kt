@@ -61,7 +61,8 @@ object AcpAdapterConfig {
     @Serializable
     enum class DistributionType {
         @SerialName("npm") NPM,
-        @SerialName("archive") ARCHIVE
+        @SerialName("archive") ARCHIVE,
+        @SerialName("local") LOCAL
     }
 
     @Serializable

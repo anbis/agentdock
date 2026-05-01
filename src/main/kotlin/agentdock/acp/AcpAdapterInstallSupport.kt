@@ -31,7 +31,8 @@ internal fun resolveInstallAdapterInfo(
     adapterInfo: AcpAdapterConfig.AdapterInfo,
     statusCallback: ((String) -> Unit)? = null
 ): AcpAdapterConfig.AdapterInfo? {
-    if (adapterInfo.distribution.type != AcpAdapterConfig.DistributionType.ARCHIVE) {
+    if (adapterInfo.distribution.type != AcpAdapterConfig.DistributionType.ARCHIVE &&
+        adapterInfo.distribution.type != AcpAdapterConfig.DistributionType.LOCAL) {
         return adapterInfo
     }
     val configuredVersion = adapterInfo.distribution.version.trim()
@@ -183,7 +184,7 @@ internal fun installedVersionFromRuntimeDir(
                 adapterMetadataJson.parseToJsonElement(packageJson.readText()).jsonObject["version"]?.toString()?.trim('"')
             }.getOrNull()?.takeIf { it.isNotBlank() }
         }
-        AcpAdapterConfig.DistributionType.ARCHIVE -> readInstallMetadata(runtimeDir)
+        AcpAdapterConfig.DistributionType.ARCHIVE, AcpAdapterConfig.DistributionType.LOCAL -> readInstallMetadata(runtimeDir)
     }
 }
 

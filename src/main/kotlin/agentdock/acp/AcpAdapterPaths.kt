@@ -65,7 +65,7 @@ object AcpAdapterPaths {
         val runtimeDir = File(getDependenciesDir(), adapterInfo.id)
         return runtimeDir.isDirectory &&
             when (adapterInfo.distribution.type) {
-                AcpAdapterConfig.DistributionType.ARCHIVE -> resolveAdapterLaunchFile(runtimeDir, adapterInfo, target)?.isFile == true
+                AcpAdapterConfig.DistributionType.ARCHIVE, AcpAdapterConfig.DistributionType.LOCAL -> resolveAdapterLaunchFile(runtimeDir, adapterInfo, target)?.isFile == true
                 AcpAdapterConfig.DistributionType.NPM -> {
                     File(runtimeDir, "node_modules").isDirectory &&
                         resolveAdapterLaunchFile(runtimeDir, adapterInfo, target)?.isFile == true
@@ -124,6 +124,17 @@ object AcpAdapterPaths {
                 downloadArchiveDistribution(targetDir, resolvedAdapterInfo, statusCallback, cancellation)
             AcpAdapterConfig.DistributionType.NPM ->
                 AcpNpmInstaller.downloadFromNpm(targetDir, resolvedAdapterInfo, statusCallback, cancellation)
+            AcpAdapterConfig.DistributionType.LOCAL -> {
+                statusCallback?.invoke("Preparing local adapter ${resolvedAdapterInfo.name}...")
+                if (resolvedAdapterInfo.id == "openai-compatible") {
+                    val scriptName = "openai-proxy.js"
+                    val stream = AcpAdapterConfig::class.java.getResourceAsStream("/acp-adapters/$scriptName")
+                    if (stream != null) {
+                        File(targetDir, scriptName).writeBytes(stream.readAllBytes())
+                    }
+                }
+                true
+            }
         }
         cancellation?.throwIfCancelled()
         if (!success) return false

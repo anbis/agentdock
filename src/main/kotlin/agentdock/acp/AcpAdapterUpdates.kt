@@ -21,6 +21,7 @@ internal object AcpAdapterUpdates {
         return when (adapterInfo.distribution.type) {
             AcpAdapterConfig.DistributionType.NPM -> !adapterInfo.distribution.packageName.isNullOrBlank()
             AcpAdapterConfig.DistributionType.ARCHIVE -> adapterInfo.distribution.updateSource != null
+            AcpAdapterConfig.DistributionType.LOCAL -> false
         }
     }
 
@@ -28,6 +29,7 @@ internal object AcpAdapterUpdates {
         return when (adapterInfo.distribution.type) {
             AcpAdapterConfig.DistributionType.NPM -> latestNpmVersion(adapterInfo.distribution.packageName)
             AcpAdapterConfig.DistributionType.ARCHIVE -> latestArchiveVersion(adapterInfo.distribution.updateSource)
+            AcpAdapterConfig.DistributionType.LOCAL -> null
         }
     }
 

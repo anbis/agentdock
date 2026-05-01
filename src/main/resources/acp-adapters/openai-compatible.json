@@ -4,16 +4,18 @@
   "iconPath": "/icons/agent.svg",
   "supportsSessionList": false,
   "distribution": {
-    "type": "archive",
-    "version": "1.0.0"
+    "type": "local",
+    "version": "1.0.0",
+    "binaryName": {
+      "win": "openai-proxy.js",
+      "unix": "openai-proxy.js"
+    }
   },
   "launchBinary": {
     "win": "node",
     "unix": "node"
   },
-  "args": [
-    "openai-proxy.js"
-  ],
+  "args": [],
   "disabledModels": [],
   "disabledModes": []
 }
