@@ -395,17 +395,19 @@ export function AgentManagementView({
                               {agent.authAuthenticated === true ? 'Log out' : 'Log in'}
                             </button>
                           )}
-                          {!agent.cliAvailable && (
+                          {agent.hasCli && !agent.cliAvailable && (
                             <span className="basis-full text-error">IDE terminal is required</span>
                           )}
-                          <button
-                            type="button"
-                            onClick={() => window.__openAgentCli?.(agent.id)}
-                            disabled={!agent.cliAvailable}
-                            className={`text-link hover:underline disabled:opacity-50 transition-colors select-none whitespace-nowrap ${linkButtonFocusClassName}`}
-                          >
-                            CLI auth
-                          </button>
+                          {agent.hasCli && (
+                            <button
+                              type="button"
+                              onClick={() => window.__openAgentCli?.(agent.id)}
+                              disabled={!agent.cliAvailable}
+                              className={`text-link hover:underline disabled:opacity-50 transition-colors select-none whitespace-nowrap ${linkButtonFocusClassName}`}
+                            >
+                              CLI auth
+                            </button>
+                          )}
                         </div>
                       )}
 

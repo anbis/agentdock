@@ -137,6 +137,7 @@ export interface AgentOption {
   updateKnown?: boolean;
   updateAvailable?: boolean;
   cliAvailable?: boolean;
+  hasCli?: boolean;
 }
 
 export function isAgentRunnable(agent: AgentOption): boolean {

@@ -95,7 +95,8 @@ private fun AcpBridge.buildAdapterPayload(
     val updateAvailable = updateKnown && latestVersion != installedVersion
     val authUiMode = info.authConfig?.uiMode ?: "login_logout"
     val isAuthenticating = AcpAuthService.isAuthenticating(info.id)
-    val cliAvailable = downloaded == true && info.cli != null && cli.isIdeTerminalAvailable()
+    val hasCli = info.cli != null
+    val cliAvailable = downloaded == true && hasCli && cli.isIdeTerminalAvailable()
     val rawInitError = service.adapterInitializationError(info.id) ?: ""
     val initializationDetail = if (isInitializing) service.adapterInitializationDetail(info.id).orEmpty() else ""
     val authRequiredByInit = rawInitError.startsWith("[AUTH_REQUIRED]")
@@ -202,7 +203,8 @@ private fun AcpBridge.buildAdapterPayload(
         downloading = isDownloading,
         downloadStatus = dlStatus,
         disabledModels = info.disabledModels,
-        cliAvailable = cliAvailable
+        cliAvailable = cliAvailable,
+        hasCli = hasCli
     )
 }
 
