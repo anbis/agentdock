@@ -53,12 +53,20 @@ data class GitCommitGenerationSettings(
 )
 
 @Serializable
+data class OpenAiCompatibleSettings(
+    val baseUrl: String = "https://api.openai.com/v1",
+    val apiKey: String = "",
+    val defaultModel: String = "gpt-4o"
+)
+
+@Serializable
 data class GlobalSettings(
     val audioNotificationsEnabled: Boolean = true,
     val uiFontSizeOffsetPx: Int = 0,
     val userMessageBackgroundStyle: String = "default",
     val audioTranscription: AudioTranscriptionSettings = AudioTranscriptionSettings(),
-    val gitCommitGeneration: GitCommitGenerationSettings = GitCommitGenerationSettings()
+    val gitCommitGeneration: GitCommitGenerationSettings = GitCommitGenerationSettings(),
+    val openAi: OpenAiCompatibleSettings = OpenAiCompatibleSettings()
 )
 
 @Serializable

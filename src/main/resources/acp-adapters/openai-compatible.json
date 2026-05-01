@@ -1,0 +1,19 @@
+{
+  "id": "openai-compatible",
+  "name": "OpenAI Compatible API",
+  "iconPath": "/icons/agent.svg",
+  "supportsSessionList": false,
+  "distribution": {
+    "type": "npm",
+    "version": "1.0.0"
+  },
+  "launchBinary": {
+    "win": "node",
+    "unix": "node"
+  },
+  "args": [
+    "openai-proxy.js"
+  ],
+  "disabledModels": [],
+  "disabledModes": []
+}

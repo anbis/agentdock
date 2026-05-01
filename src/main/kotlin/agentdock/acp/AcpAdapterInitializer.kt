@@ -268,9 +268,17 @@ internal suspend fun AcpClientService.initializeSharedProcessAtStartup(
             detail = "Starting adapter process..."
         )
 
+        val baseEnv = System.getenv().toMutableMap()
+        if (requestedAdapterName == "openai-compatible") {
+            val openAiSettings = agentdock.settings.GlobalSettingsStore.load().openAi
+            baseEnv["OPENAI_BASE_URL"] = openAiSettings.baseUrl
+            baseEnv["OPENAI_API_KEY"] = openAiSettings.apiKey
+            baseEnv["OPENAI_MODEL"] = openAiSettings.defaultModel
+        }
+
         val commandLine = com.intellij.execution.configurations.GeneralCommandLine(command)
             .withWorkDirectory(resolveAdapterProcessWorkingDirectory(File(adapterRoot)))
-            .withEnvironment(System.getenv())
+            .withEnvironment(baseEnv)
             .withRedirectErrorStream(false)
 
         val proc = withContext(Dispatchers.IO) { commandLine.createProcess() }

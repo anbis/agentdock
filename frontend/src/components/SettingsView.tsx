@@ -16,6 +16,7 @@ const defaultGlobalSettings: GlobalSettingsPayload = {
     userMessageBackgroundStyle: 'default',
     audioTranscription: { language: 'auto' },
     gitCommitGeneration: { enabled: false, adapterId: '', modelId: '', instructions: '' },
+    openAi: { baseUrl: 'https://api.openai.com/v1', apiKey: '', defaultModel: 'gpt-4o' },
   },
 };
 
@@ -45,6 +46,11 @@ function normalizeGlobalSettings(payload: Partial<GlobalSettingsPayload> | undef
         : 'default',
       audioTranscription: payload?.settings?.audioTranscription ?? { language: 'auto' },
       gitCommitGeneration: normalizeGitCommitGenerationSettings(payload?.settings?.gitCommitGeneration),
+      openAi: {
+        baseUrl: payload?.settings?.openAi?.baseUrl?.trim() || 'https://api.openai.com/v1',
+        apiKey: payload?.settings?.openAi?.apiKey?.trim() || '',
+        defaultModel: payload?.settings?.openAi?.defaultModel?.trim() || 'gpt-4o',
+      }
     },
   };
 }
@@ -276,6 +282,55 @@ export function SettingsView() {
             installedAgents={installedAgents}
             onChange={handleGitCommitGenerationChange}
           />
+
+          <SettingsCardShell
+            title="OpenAI-Compatible Provider"
+            description="Configure a custom service provider (like requesty.ai) that uses the OpenAI API format."
+          >
+            <div className="flex flex-col gap-3 max-w-lg mt-2">
+              <div className="flex flex-col gap-1">
+                <span className="text-ide-small text-foreground-secondary">Base URL</span>
+                <input
+                  type="text"
+                  className="w-full bg-input-bg border border-border rounded-[4px] px-2 py-1 text-ide-default focus:outline-none focus:border-focus"
+                  value={globalSettings.settings.openAi?.baseUrl || ''}
+                  onChange={e => {
+                    const next = { ...globalSettings.settings, openAi: { ...globalSettings.settings.openAi, baseUrl: e.target.value } };
+                    setGlobalSettings(prev => ({ ...prev, settings: next }));
+                    ACPBridge.saveGlobalSettings(next);
+                  }}
+                  placeholder="https://api.openai.com/v1"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-ide-small text-foreground-secondary">API Key</span>
+                <input
+                  type="password"
+                  className="w-full bg-input-bg border border-border rounded-[4px] px-2 py-1 text-ide-default focus:outline-none focus:border-focus"
+                  value={globalSettings.settings.openAi?.apiKey || ''}
+                  onChange={e => {
+                    const next = { ...globalSettings.settings, openAi: { ...globalSettings.settings.openAi, apiKey: e.target.value } };
+                    setGlobalSettings(prev => ({ ...prev, settings: next }));
+                    ACPBridge.saveGlobalSettings(next);
+                  }}
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-ide-small text-foreground-secondary">Default Model</span>
+                <input
+                  type="text"
+                  className="w-full bg-input-bg border border-border rounded-[4px] px-2 py-1 text-ide-default focus:outline-none focus:border-focus"
+                  value={globalSettings.settings.openAi?.defaultModel || ''}
+                  onChange={e => {
+                    const next = { ...globalSettings.settings, openAi: { ...globalSettings.settings.openAi, defaultModel: e.target.value } };
+                    setGlobalSettings(prev => ({ ...prev, settings: next }));
+                    ACPBridge.saveGlobalSettings(next);
+                  }}
+                  placeholder="gpt-4o"
+                />
+              </div>
+            </div>
+          </SettingsCardShell>
 
           {feature.supported && (
             <SettingsCardShell title="Audio Input">

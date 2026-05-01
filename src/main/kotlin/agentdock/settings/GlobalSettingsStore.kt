@@ -41,6 +41,11 @@ object GlobalSettingsStore {
                 adapterId = settings.gitCommitGeneration.adapterId.trim(),
                 modelId = settings.gitCommitGeneration.modelId.trim(),
                 instructions = settings.gitCommitGeneration.instructions.trim()
+            ),
+            openAi = settings.openAi.copy(
+                baseUrl = settings.openAi.baseUrl.trim().takeIf { it.isNotEmpty() } ?: "https://api.openai.com/v1",
+                apiKey = settings.openAi.apiKey.trim(),
+                defaultModel = settings.openAi.defaultModel.trim().takeIf { it.isNotEmpty() } ?: "gpt-4o"
             )
         )
         val file = settingsFile()

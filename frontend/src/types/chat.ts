@@ -435,12 +435,19 @@ export interface GitCommitGenerationSettings {
   instructions: string;
 }
 
+export interface OpenAiCompatibleSettings {
+  baseUrl: string;
+  apiKey: string;
+  defaultModel: string;
+}
+
 export interface GlobalSettings {
   audioNotificationsEnabled: boolean;
   uiFontSizeOffsetPx: number;
   userMessageBackgroundStyle: 'default' | 'blue' | 'background-secondary' | 'primary' | 'secondary' | 'accent' | 'input' | 'editor-bg';
   audioTranscription: AudioTranscriptionSettings;
   gitCommitGeneration: GitCommitGenerationSettings;
+  openAi: OpenAiCompatibleSettings;
 }
 
 export interface GlobalSettingsPayload {

@@ -7,6 +7,7 @@
     "acp-adapters/github-copilot-cli.json",
     "acp-adapters/kilo.json",
     "acp-adapters/qoder.json",
-    "acp-adapters/opencode.json"
+    "acp-adapters/opencode.json",
+    "acp-adapters/openai-compatible.json"
   ]
 }
